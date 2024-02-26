@@ -22,6 +22,11 @@ export class AlarmsController {
 
   @Get()
   findAll() {
-    return this.alarmsService.findAll();
+    try {
+      return this.alarmsService.findAll();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 }
