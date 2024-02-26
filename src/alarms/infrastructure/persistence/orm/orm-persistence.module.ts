@@ -12,6 +12,7 @@ import {
   MaterializedAlarmView,
   MaterializedAlarmViewSchema,
 } from './schemas/materialized-alarm-view.schema';
+import { OrmUpsertMaterializedAlarmRepository } from './repositories/upsert-materialized-alarm.repository';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import {
     },
     {
       provide: UpsertMaterializedAlarmRepository,
-      useClass: OrmFindAlarmsRepository,
+      useClass: OrmUpsertMaterializedAlarmRepository,
     },
   ],
   exports: [
