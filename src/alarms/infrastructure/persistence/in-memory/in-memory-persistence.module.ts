@@ -7,17 +7,18 @@ import { UpsertMaterializedAlarmRepository } from 'src/alarms/application/ports/
 @Module({
   imports: [],
   providers: [
+    InMemoryAlarmRepository,
     {
       provide: CreateAlarmRepository,
-      useClass: InMemoryAlarmRepository,
+      useExisting: InMemoryAlarmRepository,
     },
     {
       provide: FindAlarmsRepository,
-      useClass: InMemoryAlarmRepository,
+      useExisting: InMemoryAlarmRepository,
     },
     {
       provide: UpsertMaterializedAlarmRepository,
-      useClass: InMemoryAlarmRepository,
+      useExisting: InMemoryAlarmRepository,
     },
   ],
   exports: [

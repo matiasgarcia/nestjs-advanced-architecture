@@ -25,8 +25,10 @@ export class InMemoryAlarmRepository
         ...this.materializedAlarmViews.get(alarm.id),
         ...alarm,
       });
-      return;
+    } else {
+      this.materializedAlarmViews.set(alarm.id, alarm as AlarmReadModel);
     }
+    return;
   }
 
   async findAll(): Promise<AlarmReadModel[]> {
