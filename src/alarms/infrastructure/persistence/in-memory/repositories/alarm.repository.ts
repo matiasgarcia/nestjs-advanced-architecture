@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import {
-  AlarmRepository,
-  CreateAlarmRepository,
-} from '../../../../application/ports/create-alarm.repository';
+import { CreateAlarmRepository } from '../../../../application/ports/create-alarm.repository';
 import { Alarm } from '../../../../domain/alarm';
 import { AlarmEntity } from '../entities/alarm.entity';
 import { AlarmMapper } from '../mappers/alarm.mapper';
 import { UpsertMaterializedAlarmRepository } from 'src/alarms/application/ports/upsert-materialized-alarm.repository';
 import { AlarmReadModel } from 'src/alarms/domain/read-models/alarm.read-model';
+import { FindAlarmsRepository } from '../../../../application/ports/find-alarms.repository';
 
 @Injectable()
 export class InMemoryAlarmRepository
   implements
-    AlarmRepository,
+    FindAlarmsRepository,
     CreateAlarmRepository,
     UpsertMaterializedAlarmRepository
 {
