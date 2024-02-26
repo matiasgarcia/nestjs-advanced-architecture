@@ -11,7 +11,12 @@ export class AlarmsController {
   async create(@Body() createAlarmDto: CreateAlarmDto) {
     try {
       const alarm = await this.alarmsService.create(
-        new CreateAlarmCommand(createAlarmDto.name, createAlarmDto.severity),
+        new CreateAlarmCommand(
+          createAlarmDto.name,
+          createAlarmDto.severity,
+          createAlarmDto.triggeredAt,
+          createAlarmDto.items,
+        ),
       );
       return alarm;
     } catch (error) {
