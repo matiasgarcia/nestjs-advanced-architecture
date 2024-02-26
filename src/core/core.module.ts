@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ApplicationBootstrapOptions } from '../common/interfaces/application-bootstrap-options.interface';
 
 @Module({})
@@ -19,6 +20,7 @@ export class CoreModule {
               autoLoadEntities: true,
               synchronize: true,
             }),
+            MongooseModule.forRoot('mongodb://localhost:27017/vf-read-db'),
           ]
         : [];
 
