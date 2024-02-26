@@ -8,10 +8,16 @@ export class AlarmsController {
   constructor(private readonly alarmsService: AlarmsService) {}
 
   @Post()
-  create(@Body() createAlarmDto: CreateAlarmDto) {
-    return this.alarmsService.create(
-      new CreateAlarmCommand(createAlarmDto.name, createAlarmDto.severity),
-    );
+  async create(@Body() createAlarmDto: CreateAlarmDto) {
+    try {
+      const alarm = await this.alarmsService.create(
+        new CreateAlarmCommand(createAlarmDto.name, createAlarmDto.severity),
+      );
+      return alarm;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   @Get()
