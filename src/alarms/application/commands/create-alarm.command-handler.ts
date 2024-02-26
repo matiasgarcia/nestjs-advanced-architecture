@@ -21,7 +21,12 @@ export class CreateAlarmCommandHandler
     this.logger.debug(
       `Processing "CreateAlarmCommand": ${JSON.stringify(command)}`,
     );
-    const alarm = this.alarmFactory.create(command.name, command.severity);
+    const alarm = this.alarmFactory.create(
+      command.name,
+      command.severity,
+      command.triggeredAt,
+      command.items,
+    );
     await this.alarmRepository.save(alarm);
 
     this.eventBus.publish(new AlarmCreatedEvent(alarm));

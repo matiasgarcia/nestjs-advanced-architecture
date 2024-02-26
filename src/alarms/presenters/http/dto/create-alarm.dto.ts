@@ -8,4 +8,11 @@ export class CreateAlarmDto {
   @IsString()
   @IsNotEmpty()
   severity: string;
+
+  triggeredAt: Date;
+
+  items: Array<{
+    name: string;
+    type: string;
+  }>;
 }
