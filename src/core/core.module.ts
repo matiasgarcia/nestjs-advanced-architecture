@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApplicationBootstrapOptions } from '../common/interfaces/application-bootstrap-options.interface';
+import { EVENT_STORE_CONNECTION } from './core.constants';
 
 @Module({})
 export class CoreModule {
@@ -20,7 +21,11 @@ export class CoreModule {
               autoLoadEntities: true,
               synchronize: true,
             }),
-            MongooseModule.forRoot('mongodb://localhost:27090/vf-read-db'),
+            MongooseModule.forRoot('mongodb://localhost:27017/vf-read-db'),
+            MongooseModule.forRoot('mongodb://localhost:27018/vf-event-store', {
+              connectionName: EVENT_STORE_CONNECTION,
+              directConnection: true,
+            }),
           ]
         : [];
 
