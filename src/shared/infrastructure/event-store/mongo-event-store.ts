@@ -4,9 +4,10 @@ import { Model } from 'mongoose';
 import { EVENT_STORE_CONNECTION } from '../../../core/core.constants';
 import { SerializableEvent } from '../../domain/interfaces/serializable-event';
 import { EventDeserializer } from './deserializers/event.deserializer';
+import { EventStore } from 'src/shared/application/ports/event-store';
 
 @Injectable()
-export class MongoEventStore {
+export class MongoEventStore implements EventStore {
   private readonly logger = new Logger(MongoEventStore.name);
 
   constructor(
