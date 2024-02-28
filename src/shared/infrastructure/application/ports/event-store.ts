@@ -1,4 +1,4 @@
-import { SerializableEvent } from '../../domain/interfaces/serializable-event';
+import { SerializableEvent } from '../../../domain/interfaces/serializable-event';
 
 export abstract class EventStore {
   abstract persist(
