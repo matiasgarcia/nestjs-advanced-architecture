@@ -1,6 +1,7 @@
 import { VersionedAggregateRoot } from 'src/shared/domain/aggregate-root';
 import { AlarmItem } from './alarm-item';
 import { AlarmSeverity } from './value-objects/alarm-severity';
+import { AlarmAcknowledgedEvent } from './events/alarm-acknowledged.event';
 
 export class Alarm extends VersionedAggregateRoot {
   public name: string;
@@ -14,7 +15,7 @@ export class Alarm extends VersionedAggregateRoot {
   }
 
   acknowledge() {
-    this.isAcknowledged = true;
+    this.apply(new AlarmAcknowledgedEvent(this.id));
   }
 
   addAlarmItem(item: AlarmItem) {
