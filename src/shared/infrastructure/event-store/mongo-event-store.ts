@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EVENT_STORE_CONNECTION } from '../../../core/core.constants';
 import { SerializableEvent } from '../../domain/interfaces/serializable-event';
+import { EventDeserializer } from './deserializers/event.deserializer';
 
 @Injectable()
 export class MongoEventStore {
@@ -11,6 +12,7 @@ export class MongoEventStore {
   constructor(
     @InjectModel(Event.name, EVENT_STORE_CONNECTION)
     private readonly eventStore: Model<Event>,
+    private readonly eventDeserializer: EventDeserializer,
   ) {}
 
   async persist(
@@ -40,5 +42,17 @@ export class MongoEventStore {
     } finally {
       await session.endSession();
     }
+  }
+
+  async getEventsByStreamId(streamId: string) {
+    const events = await this.eventStore
+      .find({ streamId })
+      .sort({ position: 1 });
+    if (!events.length)
+      throw new Error(`Aggregate with id ${streamId} does not exist`);
+
+    return events.map((event) =>
+      this.eventDeserializer.deserialize(event.toJSON()),
+    );
   }
 }
